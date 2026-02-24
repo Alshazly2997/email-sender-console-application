@@ -28,19 +28,21 @@ func emailSender() {
 
 	emails := AccessDatabase()
 	for _, email := range emails {
-		if email.Status == "pending" {
-			err := smtp.SendMail(
-				fmt.Sprintf("%s:%s", host, port),
-				auth,
-				user,
-				[]string{email.EmailAddress},
-				[]byte(email.Body),
-			)
+		fmt.Println("Sending email to:", email.EmailAddress)
+		err := smtp.SendMail(
+			fmt.Sprintf("%s:%s", host, port),
+			auth,
+			user,
+			[]string{email.EmailAddress},
+			[]byte(fmt.Sprintf("Subject: Hello There!\n\n%s", email.Body)),
+		)
 
-			if err != nil {
-				fmt.Println(err)
-			}
+		if err == nil {
+			UpdateDatabase(email.ID, "send")
+		} else if err != nil {
+			UpdateDatabase(email.ID, "fail")
 		}
+
 	}
 
 }
