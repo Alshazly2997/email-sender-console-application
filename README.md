@@ -16,18 +16,17 @@ A lightweight, automated CLI tool built in Go that fetches "Pending" emails from
   
   ```SQL
   CREATE TABLE outbox (
-      id INT AUTO_INCREMENT PRIMARY KEY,
-      email_address VARCHAR(255) NOT NULL,
-      message_body TEXT NOT NULL,
-      status ENUM('pending', 'success', 'fail') DEFAULT 'pending',
-      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  email_address VARCHAR(255) NOT NULL,
+  email_body TEXT NOT NULL,
+  status ENUM ('pending', 'send', 'fail') DEFAULT 'pending'
   );
 
  **2. Environment Variables:** Create a .env file in the root directory and add your credentials
  
     ```Code snippet
-    DB_PASSWORD=your_db_password
     SMTP_HOST=smtp.gmail.com
     SMTP_PORT=587
-    SENDER_EMAIL=your-email@gmail.com
-    SENDER_PASSWORD=your-app-password
+    SMTP_USER=your-email@gmail.com
+    SMTP_PASSWORD=your-app-password
+    DATABASE_PASSWORD=your_db_password
