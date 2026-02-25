@@ -26,7 +26,7 @@ func emailSender() {
 		host,
 	)
 
-	emails := AccessDatabase()
+	emails := QueryDatabase()
 	for _, email := range emails {
 		fmt.Println("Sending email to:", email.EmailAddress)
 		err := smtp.SendMail(

@@ -18,9 +18,8 @@ type Email struct {
 
 var emails []Email
 
-func AccessDatabase() []Email {
+func AccessDatabase() sql.DB {
 	var db *sql.DB
-	var email Email
 
 	error := godotenv.Load()
 	if error != nil {
@@ -37,6 +36,13 @@ func AccessDatabase() []Email {
 	}
 
 	defer db.Close()
+
+	return *db
+}
+
+func QueryDatabase() []Email {
+	db := AccessDatabase()
+	var email Email
 
 	//Query the database
 	query, err := db.Query("SELECT * FROM outbox WHERE status = 'pending'")
@@ -58,23 +64,7 @@ func AccessDatabase() []Email {
 }
 
 func UpdateDatabase(id int, status string) {
-	var db *sql.DB
-
-	error := godotenv.Load()
-	if error != nil {
-		fmt.Println("Error loading .env file:", error)
-	}
-
-	password := os.Getenv("DATABASE_PASSWORD")
-
-	//Connect to the database
-	dsn := fmt.Sprintf("root:%s@tcp(127.0.0.1:3306)/Outbox", password)
-	db, err := sql.Open("mysql", dsn)
-	if err != nil {
-		fmt.Println("Error connecting to database:", err)
-	}
-
-	defer db.Close()
+	db := AccessDatabase()
 
 	//Update the database
 	query, err := db.Exec("UPDATE outbox SET status = ? WHERE id = ?", status, id)
