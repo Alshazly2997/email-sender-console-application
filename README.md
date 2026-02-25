@@ -22,7 +22,11 @@ A lightweight, automated CLI tool built in Go that fetches "Pending" emails from
   status ENUM ('pending', 'send', 'fail') DEFAULT 'pending'
   );
 
- **2. Environment Variables:** Create a .env file in the root directory and add your credentials
+* **2. to read a .env text file:** 
+  ```bash
+  go get github.com/joho/godotenv
+
+* **3. Environment Variables:** Create a .env file in the root directory and add your credentials
  
   ```Code snippet
     SMTP_HOST=smtp.gmail.com
