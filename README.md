@@ -24,7 +24,7 @@ A lightweight, automated CLI tool built in Go that fetches "Pending" emails from
 
  **2. Environment Variables:** Create a .env file in the root directory and add your credentials
  
-    ```Code snippet
+  ```Code snippet
     SMTP_HOST=smtp.gmail.com
     SMTP_PORT=587
     SMTP_USER=your-email@gmail.com
